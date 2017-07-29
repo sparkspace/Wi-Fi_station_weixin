@@ -9,14 +9,15 @@ Page({
     opacity: 0.4,
     disabled: true,
     threshold: 0,
-    rule: null,
+    rule: 'up',
     items: [
-      { name: 'up', value: '高于门限报警' },
+      { name: 'up', value: '高于门限报警' ,checked:'ture'},
       { name: 'down', value: '低于门限报警' },
     ]
   },
 
   radioChange: function (e) {
+    //保存报警规则到当前页面的数据
     if (e.detail.value != "") {
       this.setData({
         rule: e.detail.value
@@ -26,20 +27,25 @@ Page({
   },
 
   send: function(){
+    //发送门限数据和报警规则到后台服务器
     var thres = this.data.threshold
     var Rule = this.data.rule
     const requestTask = wx.request({
-      url: 'https://86653319.qcloud.la',
+      url: 'https://86653319.qcloud.la', //改成腾讯云给你分配的域名
       header: {
         'content-type': 'application/json',
       },
+
+      //发送给服务器的数据
       data:{
         threshold: thres,
         rule: Rule
       },
       success: function (res) {
+        //成功拿到服务器返回的数据后执行这个函数
         var flag = res.data;
         console.log(flag)
+        //返回1则报警
         if(flag == "1"){
           wx.showModal({
             title: '警报！',
@@ -52,7 +58,9 @@ Page({
               }
             }
           })
-        }else if (flag == "0"){
+        }
+        //返回0则不报警
+        else if (flag == "0"){
           wx.showModal({
             title: '提示～',
             content: '温度处于正常范围。',
@@ -78,6 +86,7 @@ Page({
   },
 
   getDataFromOneNet: function(){
+    //从oneNET请求我们的Wi-Fi气象站的数据
     const requestTask = wx.request({
       url: 'https://api.heclouds.com/devices/9939133/datapoints?datastream_id=Light,Temperature,Humidity&limit=15',
       header: {
@@ -86,11 +95,13 @@ Page({
       },
       success: function (res) {
         //console.log(res.data)
+        //拿到数据后保存到全局数据
         var app = getApp()
         app.globalData.temperature = res.data.data.datastreams[0]
         app.globalData.light = res.data.data.datastreams[1]
         app.globalData.humidity = res.data.data.datastreams[2]
         console.log(app.globalData.light)
+        //跳转到天气页面，根据拿到的数据绘图
         wx.navigateTo({
           url: '../wifi_station/tianqi/tianqi',
         })
@@ -109,6 +120,7 @@ Page({
   },
 
   change: function (e) {
+    //当有输入时激活发送按钮，无输入则禁用按钮
     if (e.detail.value != "") {
       this.setData({
         threshold: e.detail.value,

@@ -1,4 +1,4 @@
-var myCharts = require("../../../utils/wxcharts.js")
+var myCharts = require("../../../utils/wxcharts.js")//引入一个绘图的插件
 var lineChart_hum = null
 var lineChart_light = null
 var lineChart_tempe = null
@@ -11,6 +11,8 @@ Page({
     console.log('onPullDownRefresh', new Date())
   },
 
+
+  //把拿到的数据转换成绘图插件需要的输入格式
   convert: function () {
     var categories = [];
     var humidity = [];
@@ -35,6 +37,7 @@ Page({
   onLoad: function () {
     var wheatherData = this.convert();
     
+    //得到屏幕宽度
     var windowWidth = 320;
     try {
       var res = wx.getSystemInfoSync();
@@ -45,6 +48,7 @@ Page({
 
     var wheatherData = this.convert();
 
+    //新建湿度图表
     lineChart_hum = new myCharts({
       canvasId: 'humidity',
       type: 'line',
@@ -77,6 +81,7 @@ Page({
       }
     });
 
+  //新建光照强度图表
     lineChart_light = new myCharts({
       canvasId: 'light',
       type: 'line',
@@ -109,6 +114,7 @@ Page({
       }
     });
 
+    //新建温度图表
     lineChart_tempe = new myCharts({
       canvasId: 'tempe',
       type: 'line',

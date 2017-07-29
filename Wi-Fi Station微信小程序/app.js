@@ -7,10 +7,7 @@ App({
   onHide: function () {
   },
 
-  config: {
-    host: '86653319.qcloud.la' 
-  },
-
+  //本应用全局数据
   globalData: {
     temperature: {},
     light: {},
