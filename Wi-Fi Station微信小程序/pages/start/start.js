@@ -1,4 +1,4 @@
-// start.js
+﻿// start.js
 
 Page({
 
@@ -31,7 +31,7 @@ Page({
     var thres = this.data.threshold
     var Rule = this.data.rule
     const requestTask = wx.request({
-      url: 'https://86653319.qcloud.la', //改成腾讯云给你分配的域名
+      url: 'https://xxxxxxxx.xxxxxx.xx', //改成腾讯云给你分配的域名
       header: {
         'content-type': 'application/json',
       },
@@ -88,7 +88,7 @@ Page({
   getDataFromOneNet: function(){
     //从oneNET请求我们的Wi-Fi气象站的数据
     const requestTask = wx.request({
-      url: 'https://api.heclouds.com/devices/9939133/datapoints?datastream_id=Light,Temperature,Humidity&limit=15',
+      url: 'https://api.heclouds.com/devices/xxxxxxx(设备ID)/datapoints?datastream_id=Light,Temperature,Humidity&limit=15',
       header: {
         'content-type': 'application/json',
         'api-key': 'VeFI0HZ44Qn5dZO14AuLbWSlSlI='
