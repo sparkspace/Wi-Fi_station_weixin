@@ -1,26 +1,33 @@
 //index.js
 //获取应用实例
-var app = getApp()
+const app = getApp()
+
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {}
+    motto: '',
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+
   onLoad: function () {
-    console.log('onLoad')
     var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
+    //从oneNET请求我们的Wi-Fi气象站的数据
+    const requestTask = wx.request({
+      url: 'https://api.heclouds.com/devices/9939133/datapoints?datastream_id=Light,Temperature,Humidity&limit=15',
+      header: {
+        'content-type': 'application/json',
+        'api-key': 'VeFI0HZ44Qn5dZO14AuLbWSlSlI='
+      },
+      success: function (res) {
+        console.log(res)      //打印返回的数据
+      },
+
+      fail: function (res) {
+        console.log("fail!!!")
+      },
+
+      complete: function (res) {
+        console.log("end")
+      }
     })
-  }
+  },
+
 })
