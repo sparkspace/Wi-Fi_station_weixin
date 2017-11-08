@@ -1,4 +1,4 @@
-// start.js
+﻿// start.js
 
 Page({
 
@@ -28,29 +28,29 @@ Page({
 
   send: function(){
     var that = this
-    //发送门限数据和报警规则到后台服务器
-    var thres = this.data.threshold
-    var Rule = this.data.rule
+     //取得门限数据和报警规则
+     var thres = this.data.threshold
+     var Rule = this.data.rule
+     
+     //调用百度天气API
+
     const requestTask = wx.request({
-      url: 'https://api.map.baidu.com/telematics/v3/weather?location=%E5%8C%97%E4%BA%AC&output=json&ak=6tYzTvGZSOpYB5Oc2YGGOKt8', //改成腾讯云给你分配的域名
+      url: 'https://api.map.baidu.com/telematics/v3/weather?location=%E5%8C%97%E4%BA%AC&output=json&ak=6tYzTvGZSOpYB5Oc2YGGOKt8', //百度天气API
       header: {
         'content-type': 'application/json',
       },
 
-      // //发送给服务器的数据
-      // data:{
-      //   threshold: thres,
-      //   rule: Rule
-      // },
       success: function (res) {
-        // console.log(res)
+        // 利用正则字符串从百度天气API的返回数据中截出今天的温度数据
         var str = res.data.results[0].weather_data[0].date;
         var tmp1 = str.match(/实时.+/);
         var tmp2 = tmp1[0].substring(3, tmp1[0].length - 2);
         var tmp = +tmp2;
 
+	//温度高于设置的门限值
         if (tmp > that.data.threshold) {
-          if (that.data.rule == "up") {
+          if (that.data.rule == "up") { 
+	    //规则为高于门限报警，于是报警
             wx.showModal({
               title: '警报！',
               content: '温度异常！',
@@ -63,6 +63,7 @@ Page({
               }
             })
           }
+	   //规则为低于门限报警，于是不报警
           else if (that.data.rule == "down") {
             wx.showModal({
               title: '提示～',
@@ -77,7 +78,9 @@ Page({
             })
           }
         }
+	//温度低于设置的门限值
         else if (tmp <= that.data.threshold) {
+	 //规则为高于门限报警，于是不报警
           if (that.data.rule == "up") {
             wx.showModal({
               title: '提示～',
@@ -91,6 +94,7 @@ Page({
               }
             })
           }
+           //规则为低于门限报警，于是报警
           else if (that.data.rule == "down"){
             wx.showModal({
               title: '警报！',
