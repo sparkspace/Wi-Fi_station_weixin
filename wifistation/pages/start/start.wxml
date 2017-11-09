@@ -1,4 +1,4 @@
-<!--start.wxml-->
+﻿<!--start.wxml-->
 
 <button class="btn1" bindtap="getDataFromOneNet">
 睁眼看天气(OneNet)</button>
@@ -16,4 +16,4 @@ style="font-weight:bolder; font-size:15px; color:#000000; padding-left: 30rpx"
 
 <text id="text">提示：当目前温度异常时报警。单位：摄氏度</text>
 <button id="btn3" style="opacity: {{opacity}}" 
-disabled="{{disabled}}" bindtap="send">发送门限到我的服务器</button>
+disabled="{{disabled}}" bindtap="send">发送请求</button>
