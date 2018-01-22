@@ -11,6 +11,7 @@ Page({
     tempFilePaths: null,
   },
 
+  //确定图片来源，从相册中选择或者是拍照
   chooseimage: function () {
     var that = this;
     wx.showActionSheet({
@@ -29,6 +30,7 @@ Page({
 
   },
 
+  //选择图片
   chooseWxImage: function (type) {
     var that = this;
     wx.chooseImage({
@@ -43,19 +45,21 @@ Page({
     })
   },
 
+  //上传图片至服务器并接受返回的结果
   identifyimage: function () {
     var that = this;
     wx.uploadFile({
-      url: 'https://www.ourspark.org', //仅为示例，非真实的接口地址
+      url: 'https://xxxxxxxxxxxxxxxxxx', //换成自己的接口地址
       filePath: that.data.tempFilePaths[0],
       name: 'image',
       header: { "Content-Type": "multipart/form-data" },
       success: function (res) {
         console.log(res)
-        var data = JSON.parse(res.data)
+        var data = JSON.parse(res.data) //把返回结果解析成json格式
         //console.log(data)
 
         if (data.data.errormsg != "OK") {
+		//识别失败，提示上传质量更好的图片
           wx.showModal({
             title: '提示',
             content: '识别失败，请上传质量更好的图片',
@@ -68,6 +72,7 @@ Page({
             }
           })
         } else {
+		//识别成功，拼接识别结果并显示
           var list = data.data.items
           var str = ""
           for (var i = 0; i < list.length; i++) {
