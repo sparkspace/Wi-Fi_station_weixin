@@ -49,7 +49,7 @@ Page({
   identifyimage: function () {
     var that = this;
     wx.uploadFile({
-      url: 'https://www.ourspark.org', //换成自己的接口地址
+      url: 'https://xxxxxxxxxxxxxxxxxxxxxx', //换成自己的接口地址
       filePath: that.data.tempFilePaths[0],
       name: 'image',
       header: { "Content-Type": "multipart/form-data" },
