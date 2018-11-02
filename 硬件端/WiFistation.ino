@@ -5,7 +5,7 @@
 #include "./ESP8266.h"
 #include "I2Cdev.h"                                //调用库  
 //温湿度   
-#include <SHT2x.h>
+#include "SHT2x.h"
 //光照
 #define  sensorPin_1  A0
 
